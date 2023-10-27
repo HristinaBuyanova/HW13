@@ -91,9 +91,10 @@ extension ViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print("row at \(indexPath.row)row and \(indexPath.section)section")
+        let modelData = model[indexPath.section][indexPath.row]
+        print("Нажата ячейка \(modelData.title)")
         let viewController = DetailView()
-        viewController.configureView(model: model[indexPath.section][indexPath.row])
+        viewController.configureView(model: modelData)
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
