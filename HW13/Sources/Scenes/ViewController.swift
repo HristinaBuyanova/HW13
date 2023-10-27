@@ -20,10 +20,10 @@ class ViewController: UIViewController {
         tableView.register(CustomSwitchCell.self, forCellReuseIdentifier: CustomSwitchCell.identifier)
         tableView.register(CustomNotificationCell.self, forCellReuseIdentifier: CustomNotificationCell.identifier)
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -52,10 +52,6 @@ class ViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-
-    // MARK: - Actions
-
-
 
 }
 
@@ -88,10 +84,17 @@ extension ViewController: UITableViewDataSource {
             notificationCell?.model = modelData
             return notificationCell ?? UITableViewCell()
         }
-//        cell?.accessoryType = .disclosureIndicator
-//        cell?.model = modelData
-
     }
+}
 
+extension ViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        print("row at \(indexPath.row)row and \(indexPath.section)section")
+        let viewController = DetailView()
+        viewController.configureView(model: model[indexPath.section][indexPath.row])
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
